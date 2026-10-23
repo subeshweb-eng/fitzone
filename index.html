@@ -1,0 +1,359 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FitZone | Start Your Journey</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #101010, #251047, #101010);
+            color: white;
+            min-height: 100vh;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+        }
+
+        .logo {
+            color: #a3ff12;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .nav-text {
+            font-size: 13px;
+        }
+
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(35px, 7vw, 76px);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span,
+        .section-title span {
+            color: #a3ff12;
+        }
+
+        .hero p {
+            max-width: 600px;
+            color: #bbbbbb;
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 30px;
+            background: #a3ff12;
+            color: #101010;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: white;
+            transform: translateY(-3px);
+        }
+
+        /* FEATURES ARE HIDDEN UNTIL LET'S GO IS CLICKED */
+
+        .features {
+            display: none;
+            padding: 30px 8% 70px;
+        }
+
+        .features.show {
+            display: block;
+            animation: appear 0.5s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(28px, 5vw, 42px);
+            margin-bottom: 35px;
+        }
+
+        .services {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 260px;
+            min-height: 190px;
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-family: inherit;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+            border-color: #a3ff12;
+        }
+
+        .card h2 {
+            color: #a3ff12;
+            margin-bottom: 14px;
+            font-size: 22px;
+        }
+
+        .card p {
+            color: #bbbbbb;
+            line-height: 1.7;
+        }
+
+        /* COMPLETED BMI FEATURE */
+
+        .bmi-card {
+            border: 2px solid #a3ff12;
+            background: rgba(163,255,18,0.10);
+            box-shadow: 0 0 18px rgba(163,255,18,0.12);
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #a3ff12;
+            color: #101010;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        #message {
+            min-height: 30px;
+            margin-top: 25px;
+            text-align: center;
+            color: #a3ff12;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 25px;
+            text-align: center;
+            color: #888888;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 20px;
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .nav-text {
+                font-size: 10px;
+                text-align: right;
+            }
+
+            .features {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 360px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">FITZONE.</div>
+        <div class="nav-text">TRAIN SMART. LIVE STRONG.</div>
+    </nav>
+
+    <main class="hero">
+        <h1 id="main-heading">BUILD YOUR <span>BEST SELF.</span></h1>
+
+        <p id="main-description">
+            Your journey to a stronger, healthier you starts here.
+            Set your goals, stay consistent, and make every day count.
+        </p>
+
+        <button class="btn" id="start-button" onclick="startJourney()">
+            START YOUR JOURNEY →
+        </button>
+    </main>
+
+    <!-- THESE CARDS APPEAR AFTER CLICKING LET'S GO -->
+
+    <section class="features" id="features">
+
+        <h2 class="section-title">
+            YOUR FITNESS <span>JOURNEY</span>
+        </h2>
+
+        <div class="services">
+
+            <!-- COMPLETED BMI FEATURE -->
+
+            <a href="bmi.html" class="card bmi-card"
+               style="text-decoration:none; display:block;">
+
+                <h2>✅ BMI Check</h2>
+
+                <p>
+                    Calculate your Body Mass Index using your
+                    height and weight.
+                </p>
+
+                <span class="status">✓ COMPLETED</span>
+
+                <p style="margin-top:15px; color:#a3ff12;">
+                    Click to open →
+                </p>
+
+            </a>
+
+            <!-- COACHING -->
+
+            <button class="card" onclick="showProgress('Coaching')">
+                <h2>🎯 Coaching</h2>
+
+                <p>
+                    Learn exercise techniques and explore
+                    your fitness goals.
+                </p>
+
+                <span class="status"
+                      style="background:#444;color:white;">
+                    COMING SOON
+                </span>
+            </button>
+
+            <!-- STRENGTH -->
+
+            <button class="card" onclick="showProgress('Strength')">
+                <h2>💪 Strength</h2>
+
+                <p>
+                    Explore strength training and build
+                    a consistent exercise routine.
+                </p>
+
+                <span class="status"
+                      style="background:#444;color:white;">
+                    COMING SOON
+                </span>
+            </button>
+
+            <!-- PERFORMANCE -->
+
+            <button class="card" onclick="showProgress('Performance')">
+                <h2>⚡ Performance</h2>
+
+                <p>
+                    Explore performance training and
+                    work toward personal goals.
+                </p>
+
+                <span class="status"
+                      style="background:#444;color:white;">
+                    COMING SOON
+                </span>
+            </button>
+
+        </div>
+
+        <p id="message" aria-live="polite"></p>
+
+    </section>
+
+    <footer>
+        © 2026 FitZone. Built by a future developer.
+    </footer>
+
+    <script>
+        function startJourney() {
+            document.getElementById("main-heading").innerHTML =
+                'WELCOME TO <span>FITZONE!</span>';
+
+            document.getElementById("main-description").innerText =
+                "Choose a feature below and start exploring.";
+
+            document.getElementById("start-button").innerText =
+                "LET'S GO! 🔥";
+
+            document.getElementById("features").classList.add("show");
+
+            document.getElementById("features").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+        function showProgress(activity) {
+            document.getElementById("message").innerText =
+                activity + " — WORK IN PROGRESS! 🚧";
+        }
+    </script>
+
+</body>
+</html>
+```

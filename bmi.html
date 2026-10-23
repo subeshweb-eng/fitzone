@@ -1,0 +1,313 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FitZone | BMI Calculator</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #101010, #251047, #101010);
+            color: white;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+        }
+
+        .logo {
+            color: #a3ff12;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .back-link {
+            color: #a3ff12;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .calculator {
+            width: min(500px, 90%);
+            margin: 55px auto;
+            padding: 35px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-size: 34px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        h1 span {
+            color: #a3ff12;
+        }
+
+        .intro {
+            text-align: center;
+            color: #bbbbbb;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin: 18px 0 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            background: #1c1c1c;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: 2px solid #a3ff12;
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            background: #a3ff12;
+            color: #101010;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        #result {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        #result.normal {
+            color: #a3ff12;
+        }
+
+        #result.abnormal {
+            color: #ff4545;
+        }
+
+        .reference {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+        }
+
+        .reference h2 {
+            color: #a3ff12;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .reference p {
+            color: #bbbbbb;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .note {
+            color: #999999;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 500px) {
+            nav {
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .calculator {
+                padding: 25px;
+                margin-top: 30px;
+            }
+
+            h1 {
+                font-size: 29px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">FITZONE.</div>
+        <a class="back-link" href="index.html">← Back</a>
+    </nav>
+
+    <main class="calculator">
+
+        <h1>BMI <span>CHECK</span></h1>
+
+        <p class="intro">
+            Enter your height and weight to calculate
+            your Body Mass Index.
+        </p>
+
+        <form id="bmi-form">
+
+            <label for="height">Height (centimetres)</label>
+            <input
+                type="number"
+                id="height"
+                placeholder="Example: 170"
+                min="1"
+                max="300"
+                step="any"
+                required
+            >
+
+            <label for="weight">Weight (kilograms)</label>
+            <input
+                type="number"
+                id="weight"
+                placeholder="Example: 65"
+                min="1"
+                max="500"
+                step="any"
+                required
+            >
+
+            <button class="btn" type="submit">
+                CALCULATE MY BMI
+            </button>
+
+        </form>
+
+        <div id="result" aria-live="polite"></div>
+
+        <section class="reference">
+
+            <h2>Adult BMI Reference</h2>
+
+            <p>
+                🔴 Below 18.5: Underweight<br>
+                🟢 18.5–24.9: Healthy-weight range<br>
+                🔴 25.0–29.9: Overweight<br>
+                🔴 30.0 and above: Obesity range
+            </p>
+
+        </section>
+
+        <p class="note">
+            BMI is a screening measure, not a diagnosis.
+            These categories are for adults aged 20 and older.
+            For people under 20, BMI must be interpreted using
+            age- and sex-specific growth charts.
+        </p>
+
+    </main>
+
+    <script>
+        document.getElementById("bmi-form").addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+                const height = Number(
+                    document.getElementById("height").value
+                );
+
+                const weight = Number(
+                    document.getElementById("weight").value
+                );
+
+                const result = document.getElementById("result");
+
+                result.className = "";
+
+                if (
+                    !Number.isFinite(height) ||
+                    !Number.isFinite(weight) ||
+                    height <= 0 ||
+                    weight <= 0 ||
+                    height > 300 ||
+                    weight > 500
+                ) {
+                    result.innerText =
+                        "Please enter a valid height and weight.";
+
+                    result.classList.add("abnormal");
+                    return;
+                }
+
+                const heightMetres = height / 100;
+                const bmi = weight / (heightMetres * heightMetres);
+
+                if (!Number.isFinite(bmi)) {
+                    result.innerText =
+                        "Unable to calculate. Please check your entries.";
+
+                    result.classList.add("abnormal");
+                    return;
+                }
+
+                let category;
+
+                if (bmi < 18.5) {
+                    category = "Below the adult reference range";
+                    result.classList.add("abnormal");
+                } else if (bmi < 25) {
+                    category = "Within the adult reference range";
+                    result.classList.add("normal");
+                } else if (bmi < 30) {
+                    category = "Above the adult reference range";
+                    result.classList.add("abnormal");
+                } else {
+                    category = "In the adult obesity range";
+                    result.classList.add("abnormal");
+                }
+
+                result.innerHTML =
+                    "<strong>Your BMI: " + bmi.toFixed(1) +
+                    "</strong><br>" + category;
+            }
+        );
+    </script>
+
+</body>
+</html>
+```
